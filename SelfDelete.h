@@ -1,3 +1,5 @@
+#pragma once
+
 #pragma comment(lib, "Shlwapi.lib")
 
 #include <Windows.h>
@@ -5,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define DS_STREAM_RENAME L":abcde" // Name of data stream (keep the ":")
+#define DS_STREAM_RENAME L":abc" // Name of data stream (keep the ":")
 
 static HANDLE ds_open_handle(PWCHAR pwPath) {
 	return CreateFileW(pwPath, DELETE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -14,8 +16,8 @@ static HANDLE ds_open_handle(PWCHAR pwPath) {
 static BOOL ds_rename_handle(HANDLE hHandle) {
 	FILE_RENAME_INFO fRename;
 	RtlSecureZeroMemory(&fRename, sizeof(fRename));
-	
-	LPWSTR lpwStream = DS_STREAM_RENAME;
+
+	PCWSTR lpwStream = DS_STREAM_RENAME;
 	fRename.FileNameLength = sizeof(lpwStream);
 	RtlCopyMemory(fRename.FileName, lpwStream, sizeof(lpwStream));
 
